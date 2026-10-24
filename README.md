@@ -53,7 +53,7 @@ npm run preview  # Build lokal ansehen
 - Schriften (Bakbak One, Lato) lokal eingebunden – keine Verbindung zu Google Fonts
 - Bilder automatisch als WebP in mehreren Größen, feste Seitenverhältnisse (kein Layout-Springen)
 - Animationen: `src/scripts/motion.ts` (Einblenden beim Scrollen, Zählen der Kennzahlen, Licht-Effekt auf Karten, Parallax). Bei „Bewegung reduzieren“ im Betriebssystem automatisch aus; ohne JavaScript ist alles sofort sichtbar.
-- Vercel Web Analytics (ohne Cookies → kein Cookie-Banner nötig). Aktiv nur auf der Live-Domain.
+- Vercel Web Analytics (ohne Cookies → kein Cookie-Banner nötig). Aktiv nur auf der Live-Domain; einmalig im Vercel-Dashboard unter *Project → Analytics → Enable* einschalten.
 - `sitemap-index.xml`, `robots.txt`, OG-Bild, JSON-LD (WebSite + Organization)
 - Sicherheits-Header und Caching in `vercel.json`
 
@@ -65,10 +65,16 @@ Keine.
 Für die Website **nur** diese beiden Einträge ändern – auf die Werte, die Vercel unter
 *Project → Settings → Domains* anzeigt:
 
-| Typ   | Name  | Wert (Vercel-Standard, bitte im Dashboard prüfen) |
-| ----- | ----- | ------------------------------------------------- |
-| A     | `@`   | `76.76.21.21`                                     |
-| CNAME | `www` | `cname.vercel-dns.com`                            |
+Die Domain liegt bei **Strato** (Nameserver `docks15.rzone.de` / `shades16.rzone.de`).
+Werte laut Vercel (Stand Oktober 2026):
+
+| Typ   | Name  | Wert                                   |
+| ----- | ----- | -------------------------------------- |
+| A     | `@`   | `216.150.1.1`                          |
+| A     | `@`   | `216.150.16.1`                         |
+| CNAME | `www` | `97e31a7dc28f2ecc.vercel-dns-016.com.` |
+
+Falls Strato nur einen A-Record erlaubt: `76.76.21.21` (und für `www` alternativ `cname.vercel-dns.com.`).
 
 - Alte A- und CNAME-Einträge für `@` und `www` vorher entfernen (sonst antworten zwei Server).
 - **MX- und TXT-Einträge der Haupt-Domain unverändert lassen** – sonst kommen keine E-Mails mehr an.
