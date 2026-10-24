@@ -1,0 +1,143 @@
+---
+import { Image } from 'astro:assets';
+import { portfolio } from '../../data/portfolio';
+const items = portfolio.filter((p) => p.visible);
+---
+
+<section class="portfolio" aria-labelledby="portfolio-title">
+  <div class="container">
+    <h2 id="portfolio-title" class="sr-only">Beteiligungen &amp; Projekte</h2>
+    <ul class="portfolio__grid" role="list">
+      {
+        items.map((p, i) => (
+          <li class="portfolio__item" data-reveal style={`--reveal-delay:${(i % 3) * 110}ms`}>
+            <article class="card" data-glow>
+            <div class="card__media">
+              <Image
+                src={p.image.src}
+                alt={p.image.alt}
+                widths={[400, 600, 812]}
+                sizes="(max-width: 767px) calc(100vw - 48px), (max-width: 1298px) 31vw, 406px"
+                loading="lazy"
+              />
+            </div>
+            <div class="card__body">
+              <span class="card__label">{p.status}</span>
+              <h3 class="card__title">{p.name}</h3>
+              <hr class="rule card__rule" />
+              <p class="card__text">{p.text}</p>
+              <p class="card__meta">{p.gruendung}</p>
+            </div>
+            </article>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .portfolio {
+    padding: 111px 0 100px;
+    background: var(--bg);
+  }
+  .portfolio__grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .portfolio__item { display: flex; }
+  .card {
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: var(--surface-2);
+    border-radius: var(--radius-m);
+    box-shadow:
+      rgba(17, 17, 26, 0.05) 0 1px 4px 0,
+      rgba(17, 17, 26, 0.1) 0 0 8px 0;
+    overflow: hidden;
+    isolation: isolate;
+    height: 100%;
+    transition:
+      transform 0.6s var(--ease-out),
+      box-shadow 0.6s var(--ease-out);
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: radial-gradient(360px circle at var(--mx, 50%) var(--my, 50%), rgba(193, 255, 114, 0.1), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow:
+        rgba(0, 0, 0, 0.35) 0 24px 48px -16px,
+        rgba(193, 255, 114, 0.18) 0 0 0 1px;
+    }
+    .card:hover::before { opacity: 1; }
+    .card:hover .card__media :global(img) { transform: scale(1.05); }
+  }
+
+  .card__media {
+    aspect-ratio: 406 / 256;
+    background: #fff;
+    overflow: hidden;
+  }
+  .card__media :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s var(--ease-out);
+  }
+
+  .card__body {
+    flex: 1;
+    padding: 29px 16px 36px;
+  }
+  .card__label {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: var(--radius-s);
+    background: #fff;
+    color: var(--ink);
+    font-size: 12px;
+    line-height: 20px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .card__title {
+    margin-top: 20px;
+    font-size: 20px;
+    line-height: 1.012;
+  }
+  .card__rule { margin: 18px 0 0; }
+  .card__text {
+    margin-top: 17px;
+    font-size: 16px;
+    line-height: 24px;
+  }
+  .card__meta {
+    margin-top: 10px;
+    font-size: 14px;
+    line-height: 21px;
+  }
+
+  @media (max-width: 1023px) {
+    .portfolio__grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 767px) {
+    .portfolio { padding: 30px 0 50px; }
+    .portfolio__grid { grid-template-columns: 1fr; }
+  }
+</style>

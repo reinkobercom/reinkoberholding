@@ -1,0 +1,31 @@
+---
+// Zerlegt eine Überschrift in Wörter, damit sie nacheinander einblenden.
+// Teile mit accent: true werden in der Akzentfarbe gezeigt.
+interface Props {
+  parts: { text: string; accent?: boolean }[];
+}
+const { parts } = Astro.props;
+let i = 0;
+const tokens = parts.flatMap((p) =>
+  p.text
+    .split(/(\s+)/)
+    .filter((t) => t.length)
+    .map((t) => ({ t, accent: !!p.accent, space: /^\s+$/.test(t), i: /^\s+$/.test(t) ? -1 : i++ })),
+);
+---
+
+{
+  tokens.map((tok) =>
+    tok.space ? (
+      ' '
+    ) : (
+      <span class:list={['w', { accent: tok.accent }]} style={`--i:${tok.i}`}>
+        {tok.t}
+      </span>
+    ),
+  )
+}
+
+<style>
+  .accent { color: var(--accent); }
+</style>

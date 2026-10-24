@@ -1,0 +1,21 @@
+---
+import { Image } from 'astro:assets';
+import { images } from '../data/images';
+---
+
+<header class="lheader">
+  <a href="/" class="lheader__logo" aria-label="Reinkober Holding – zur Startseite">
+    <Image src={images.logoWeiss.src} alt={images.logoWeiss.alt} width={143} densities={[1, 2]} loading="eager" />
+  </a>
+</header>
+
+<style>
+  .lheader {
+    display: flex;
+    justify-content: center;
+    padding: 16px 0;
+    background: var(--bg);
+  }
+  .lheader__logo { display: block; padding: 1px 4px; }
+  .lheader__logo :global(img) { width: 143px; height: auto; }
+</style>

@@ -1,0 +1,51 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/home/Hero.astro';
+import Wachstumspartner from '../components/home/Wachstumspartner.astro';
+import Kennzahlen from '../components/home/Kennzahlen.astro';
+import Portfolio from '../components/home/Portfolio.astro';
+import Footer from '../components/Footer.astro';
+import { sections } from '../data/sections';
+import { site } from '../data/site';
+import { portfolio } from '../data/portfolio';
+
+const s = sections.startseite;
+
+const orgLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: site.name,
+  url: site.url,
+  logo: `${site.url}/icon-512.png`,
+  email: site.email,
+  telephone: site.phone,
+  vatID: site.register.vatId,
+  founder: { '@type': 'Person', name: site.register.managingDirector },
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: site.address.street,
+    postalCode: site.address.zip,
+    addressLocality: site.address.city,
+    addressCountry: site.address.country,
+  },
+  sameAs: [site.partnerUrl, ...site.social.map((x) => x.url)],
+  subOrganization: portfolio
+    .filter((p) => p.visible && p.status === 'AKTIV')
+    .map((p) => ({ '@type': 'Organization', name: p.name })),
+};
+---
+
+<Base
+  title="Reinkober Holding: Beteiligungen & Projekte im Überblick"
+  description="Entdecken Sie die Beteiligungen und Projekte der Reinkober Holding GmbH. Von innovativen Start-ups bis zu erfolgreichen Exits – ein Überblick über unser Portfolio."
+  path="/"
+  jsonLd={[orgLd]}
+>
+  <main id="inhalt">
+    {s.hero && <Hero />}
+    {s.wachstumspartner && <Wachstumspartner />}
+    {s.kennzahlen && <Kennzahlen />}
+    {s.portfolio && <Portfolio />}
+  </main>
+  <Footer />
+</Base>

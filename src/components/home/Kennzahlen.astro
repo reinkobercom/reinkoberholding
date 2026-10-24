@@ -1,0 +1,107 @@
+---
+import { kennzahlen } from '../../data/portfolio';
+const fmt = new Intl.NumberFormat('de-DE');
+---
+
+<section class="stats" aria-label="Kennzahlen">
+  <div class="container">
+    <ul class="stats__grid" role="list">
+      {
+        kennzahlen.map((k, i) => (
+          <li class="stats__card" data-reveal data-glow style={`--reveal-delay:${(i % 2) * 110}ms`}>
+            <p class="stats__number" data-count={k.value}>
+              <span class="stats__value">
+                <span class="stats__ghost" aria-hidden="true">{fmt.format(k.value)}</span>
+                <span class="stats__out" data-count-out>{fmt.format(k.value)}</span>
+              </span>
+              {k.unit && <span class="stats__unit">{k.unit}</span>}
+              {k.suffix && <span class="stats__suffix">{k.suffix}</span>}
+            </p>
+            <p class="stats__label">{k.label}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .stats {
+    padding: 30px 0 100px;
+    background: var(--bg);
+  }
+  .stats__grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .stats__card {
+    position: relative;
+    padding: 32px 32px 29px;
+    background: var(--surface);
+    border-radius: var(--radius-l);
+    overflow: hidden;
+    isolation: isolate;
+  }
+  /* Lichtkegel, der dem Mauszeiger folgt */
+  .stats__card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(193, 255, 114, 0.09), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .stats__card:hover::before { opacity: 1; }
+
+  .stats__number {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: nowrap;
+    font-family: var(--font-head);
+    font-size: 64px;
+    line-height: 58px;
+    height: 58px;
+    white-space: nowrap;
+  }
+  .stats__value {
+    display: inline-grid;
+    text-align: right;
+  }
+  .stats__value > span { grid-area: 1 / 1; }
+  .stats__ghost { visibility: hidden; }
+  .stats__unit,
+  .stats__suffix { line-height: 1; }
+  .stats__unit {
+    margin-left: 6px;
+    font-size: 0.8em;
+  }
+  .stats__unit:is(:empty) { display: none; }
+  .stats__suffix {
+    margin-left: 5px;
+    font-family: var(--font-text);
+    font-size: 0.6em;
+  }
+  .stats__label {
+    margin-top: 8px;
+    font-size: 20px;
+    line-height: 30px;
+    font-weight: 700;
+  }
+
+  @media (max-width: 767px) {
+    .stats { padding: 15px 0 50px; }
+    .stats__grid { grid-template-columns: 1fr; }
+    .stats__card { padding: 24px; }
+    /* Große Zahlen passen sich der Bildschirmbreite an – kein seitliches Überlaufen */
+    .stats__number {
+      font-size: clamp(36px, 11.4vw, 64px);
+      line-height: 1;
+      height: auto;
+    }
+  }
+</style>

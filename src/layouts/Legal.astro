@@ -1,0 +1,47 @@
+---
+import Base from './Base.astro';
+import LegalHeader from '../components/LegalHeader.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+}
+const { title, description, path } = Astro.props;
+---
+
+<Base title={title} description={description} path={path}>
+  <LegalHeader />
+  <main id="inhalt" class="legal">
+    <slot />
+  </main>
+  <Footer />
+</Base>
+
+<style is:global>
+  .legal a { overflow-wrap: anywhere; }
+  .legal a:hover { color: var(--accent); }
+  .legal-text p,
+  .legal-text h3,
+  .legal-text h4 {
+    font-family: var(--font-text);
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: normal;
+  }
+  .legal-text > * + * { margin-top: 16px; }
+  .legal-text h2,
+  .legal-text h3 { font-weight: 700; }
+  .legal-text h2 {
+    font-family: var(--font-text);
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: normal;
+  }
+  .legal-text h4 { font-weight: 400; }
+  .legal-h2 {
+    font-size: 24px;
+    line-height: 1.008;
+  }
+</style>

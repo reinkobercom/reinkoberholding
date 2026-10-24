@@ -1,0 +1,192 @@
+/* ─── Schriften (lokal, keine Verbindung zu Google) ─── */
+@import '@fontsource/bakbak-one/latin-400.css';
+@import '@fontsource/bakbak-one/latin-ext-400.css';
+@import '@fontsource/lato/latin-400.css';
+@import '@fontsource/lato/latin-ext-400.css';
+@import '@fontsource/lato/latin-700.css';
+@import '@fontsource/lato/latin-ext-700.css';
+
+/* ─── Design-Tokens (gemessen an der alten Seite) ─── */
+:root {
+  --bg: #1c1c1c;
+  --surface: #2a2a2a;
+  --surface-2: #454545;
+  --accent: #c1ff72;
+  --text: #ffffff;
+  --text-muted: rgba(255, 255, 255, 0.5);
+  --line-subtle: rgba(245, 245, 245, 0.18);
+  --ink: #1c1c1c;
+
+  --font-head: 'Bakbak One', 'Arial Black', system-ui, sans-serif;
+  --font-text: 'Lato', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --container: 1250px;
+  --gutter: 24px;
+  --radius-s: 4px;
+  --radius-m: 8px;
+  --radius-l: 16px;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  background: var(--bg);
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-text);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+}
+
+img { display: block; max-width: 100%; height: auto; }
+h1, h2, h3, h4, p { margin: 0; }
+h1, h2, h3, .head {
+  font-family: var(--font-head);
+  font-weight: 400;
+  letter-spacing: -0.4px;
+}
+a { color: inherit; }
+strong, b { font-weight: 700; }
+
+.container {
+  width: min(var(--container), 100% - 2 * var(--gutter));
+  margin-inline: auto;
+}
+
+.sr-only {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0);
+  white-space: nowrap; border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: 16px; top: -100px;
+  z-index: 100;
+  padding: 12px 18px;
+  background: var(--accent);
+  color: var(--ink);
+  font-weight: 700;
+  border-radius: var(--radius-s);
+  text-decoration: none;
+}
+.skip-link:focus { top: 16px; }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Trennlinie (2 px, wie Onepage „line“-Atom) */
+.rule {
+  display: block;
+  height: 2px;
+  margin-block: 4px;
+  border: 0;
+  background: var(--line-subtle);
+}
+.rule--accent { background: var(--accent); }
+
+/* Button – Akzent, mit Glas-Glanz beim Überfahren */
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 56px;
+  padding: 0 28px;
+  border-radius: var(--radius-s);
+  background: var(--accent);
+  color: var(--ink);
+  font: 700 15px/1.5 var(--font-text);
+  text-decoration: none;
+  overflow: hidden;
+  isolation: isolate;
+  transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
+}
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(110deg, transparent 20%, rgba(255, 255, 255, 0.55) 50%, transparent 80%);
+  transform: translateX(-120%);
+  transition: transform 0.7s var(--ease-out);
+}
+.btn:hover,
+.btn:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px -8px rgba(193, 255, 114, 0.55);
+}
+.btn:hover::after,
+.btn:focus-visible::after { transform: translateX(120%); }
+
+/* ─── Animationen beim Scrollen ───
+   Nur aktiv, wenn JavaScript läuft (Klasse .js am <html>) und der
+   Nutzer keine reduzierten Bewegungen eingestellt hat. */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-reveal] {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0) scale(0.94);
+    transition:
+      opacity 0.8s var(--ease-out),
+      transform 0.9s var(--ease-out);
+    transition-delay: var(--reveal-delay, 0ms);
+    will-change: opacity, transform;
+  }
+  .js [data-reveal='fade'] { transform: none; }
+  .js [data-reveal='left'] { transform: translate3d(-28px, 0, 0); }
+  .js [data-reveal='right'] { transform: translate3d(28px, 0, 0) scale(0.98); }
+  .js [data-reveal].is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Linie zeichnet sich von der Mitte aus */
+  .js [data-draw] {
+    transform: scaleX(0);
+    transform-origin: 50% 50%;
+    transition: transform 1.2s var(--ease-out);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+  .js [data-draw].is-visible { transform: scaleX(1); }
+
+  /* Überschrift: Wörter steigen nacheinander auf */
+  .js .split-words .w {
+    display: inline-block;
+    opacity: 0;
+    transform: translate3d(0, 0.45em, 0);
+    filter: blur(6px);
+    transition:
+      opacity 0.7s var(--ease-out),
+      transform 0.8s var(--ease-out),
+      filter 0.7s var(--ease-out);
+    transition-delay: calc(var(--i) * 45ms + 150ms);
+  }
+  .js .split-words.is-visible .w {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}

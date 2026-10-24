@@ -1,0 +1,138 @@
+---
+import { Image } from 'astro:assets';
+import { images } from '../../data/images';
+import SplitWords from '../SplitWords.astro';
+
+const leistungen = [
+  {
+    title: 'Positionierung & Neugründung',
+    text: 'Wir gründen Unternehmen teilweise mit neu oder steigen früh als Partner ein. Gemeinsam entwickeln wir eine klare Positionierung, die Markt, Angebot und Zielgruppe von Anfang an richtig zusammenbringt – als Basis für skalierbares Wachstum.',
+  },
+  {
+    title: 'Marketing-Automation',
+    text: 'Wir bauen automatisierte Marketing- und Lead-Systeme auf, die dauerhaft Nachfrage erzeugen. Von der ersten Aufmerksamkeit bis zur strukturierten Anfrage entstehen Prozesse, die messbar funktionieren.',
+  },
+  {
+    title: 'Skalierbare Systeme',
+    text: 'Wir entwickeln Marketing- und Vertriebssysteme, die mit dem Unternehmen wachsen. Klare Prozesse, saubere Übergaben und Strukturen, die nicht an Personen gebunden sind – sondern an Ergebnisse.',
+  },
+];
+---
+
+<section class="hero" aria-labelledby="hero-title">
+  <div class="container">
+    <div class="hero__intro">
+      <a href="/" class="hero__logo" aria-label="Reinkober Holding – Startseite" data-reveal style="--reveal-delay:0ms">
+        <Image
+          src={images.logoWeiss.src}
+          alt={images.logoWeiss.alt}
+          width={143}
+          densities={[1, 2]}
+          loading="eager"
+          fetchpriority="high"
+        />
+      </a>
+
+      <h1 id="hero-title" class="hero__title split-words">
+        <SplitWords
+          parts={[
+            { text: 'Wir beteiligen uns an Unternehmen – und bauen Systeme für ' },
+            { text: 'planbares Wachstum.', accent: true },
+          ]}
+        />
+      </h1>
+
+      <p class="hero__lead" data-reveal style="--reveal-delay:450ms">
+        Wir beteiligen uns an ausgewählten Unternehmen und entwickeln skalierbare Marketing- und Vertriebssysteme, die
+        kontinuierlich neue Anfragen, Abschlüsse und Umsatz ermöglichen. Unser Fokus liegt nicht auf Kampagnen, sondern
+        auf funktionierenden Strukturen, die Wachstum messbar und wiederholbar machen.
+      </p>
+
+      <hr class="rule rule--accent hero__rule" data-draw style="--reveal-delay:650ms" />
+    </div>
+
+    <div class="hero__grid">
+      {
+        leistungen.map((l, i) => (
+          <div class="hero__item" data-reveal style={`--reveal-delay:${i * 120}ms`}>
+            <h2 class="hero__item-title">{l.title}</h2>
+            <p class="hero__item-text">{l.text}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding: 120px 0 110px;
+    background: var(--bg);
+  }
+  .hero__intro {
+    width: calc(100% * 22 / 24);
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .hero__logo { display: block; padding: 1px 4px; border-radius: 4px; }
+  .hero__logo :global(img) { width: 143px; height: auto; }
+
+  .hero__title {
+    margin-top: 60px;
+    max-width: 86%;
+    font-size: 48px;
+    line-height: 0.984;
+    text-wrap: balance;
+  }
+  .hero__lead {
+    margin-top: 30px;
+    max-width: 79%;
+    font-size: 18px;
+    line-height: 27px;
+  }
+  .hero__rule {
+    width: 100%;
+    margin: 135px 0 0;
+  }
+
+  .hero__grid {
+    margin-top: 95px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 100px;
+    row-gap: 40px;
+  }
+  .hero__item-title {
+    font-size: 24px;
+    line-height: 1.008;
+  }
+  .hero__item-text {
+    margin-top: 20px;
+    color: var(--text-muted);
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  @media (max-width: 1023px) {
+    .hero__grid { column-gap: 40px; }
+  }
+  @media (max-width: 767px) {
+    .hero { padding: 60px 0 50px; }
+    .hero__intro { width: 100%; }
+    .hero__title {
+      max-width: none;
+      font-size: clamp(26px, 7.43vw, 48px);
+    }
+    .hero__lead { max-width: none; }
+    .hero__rule { margin-top: 96px; }
+    .hero__grid {
+      margin-top: 134px;
+      grid-template-columns: 1fr;
+      row-gap: 24px;
+    }
+    .hero__item { padding-bottom: 10px; }
+  }
+</style>

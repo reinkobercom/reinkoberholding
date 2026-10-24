@@ -1,0 +1,106 @@
+---
+import { Image } from 'astro:assets';
+import { images } from '../../data/images';
+import { site } from '../../data/site';
+---
+
+<section class="partner" aria-labelledby="partner-title">
+  <div class="container">
+    <div class="partner__box" data-reveal>
+      <div class="partner__text">
+        <Image
+          class="partner__logo"
+          src={images.logoReinkoberCom.src}
+          alt={images.logoReinkoberCom.alt}
+          width={195}
+          densities={[1, 2]}
+          loading="lazy"
+        />
+        <h2 id="partner-title" class="partner__title">Wachstumspartner der Holding</h2>
+        <div class="partner__copy">
+          <p>reinkober.com ist das ausführende Wachstums- und Umsetzungsteam der Reinkober Holding.</p>
+          <p>
+            Abseits von direkten Unternehmensbeteiligungen arbeiten wir mit ausgewählten Unternehmen auf
+            Erfolgsbeteiligungsbasis zusammen und übernehmen den Aufbau von Positionierung, Marketing-Automation und
+            skalierbaren Vertriebsstrukturen. Wir denken nicht in Maßnahmen, sondern in Ergebnissen – mit klaren KPIs,
+            unternehmerischer Verantwortung und einem festen Fokus auf messbares Wachstum.
+          </p>
+        </div>
+        <a class="btn partner__btn" href={site.partnerUrl}>Zur Website von reinkober.com</a>
+      </div>
+      <div class="partner__media" data-parallax>
+        <Image
+          src={images.wachstumspartner.src}
+          alt={images.wachstumspartner.alt}
+          widths={[400, 600, 800, 1100, 1600]}
+          sizes="(max-width: 767px) calc(100vw - 48px), (max-width: 1298px) 42vw, 526px"
+          loading="lazy"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .partner {
+    padding: 100px 0 30px;
+    background: var(--bg);
+  }
+  .partner__box {
+    display: grid;
+    grid-template-columns: 58fr 42fr;
+    min-height: 540px;
+    background: var(--surface);
+    border-radius: var(--radius-l);
+    overflow: hidden;
+  }
+  .partner__text {
+    align-self: center;
+    padding: 56px 28px 56px 56px;
+  }
+  .partner__text :global(.partner__logo) {
+    width: 195px;
+    height: auto;
+    margin-top: 1px;
+  }
+  .partner__title {
+    margin-top: 21px;
+    font-size: 32px;
+    line-height: 1;
+  }
+  .partner__copy {
+    margin-top: 10px;
+    font-size: 18px;
+    line-height: 27px;
+  }
+  .partner__copy p + p { margin-top: 27px; }
+  .partner__btn { margin-top: 20px; }
+
+  .partner__media {
+    position: relative;
+    overflow: hidden;
+  }
+  .partner__media :global(img) {
+    position: absolute;
+    inset: -24px 0;
+    width: 100%;
+    height: calc(100% + 48px);
+    max-width: none;
+    object-fit: cover;
+    transform: translate3d(0, var(--py, 0px), 0);
+    will-change: transform;
+  }
+
+  @media (max-width: 767px) {
+    .partner { padding: 50px 0 14px; }
+    .partner__box {
+      grid-template-columns: 1fr;
+      min-height: 0;
+    }
+    .partner__text { padding: 24px 24px 0; }
+    .partner__media {
+      margin-top: 44px;
+      aspect-ratio: 2 / 1;
+    }
+  }
+</style>

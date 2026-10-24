@@ -1,0 +1,158 @@
+---
+import Legal from '../layouts/Legal.astro';
+import { site } from '../data/site';
+import { sections } from '../data/sections';
+const s = sections.impressum;
+const r = site.register;
+---
+
+<Legal
+  title="Impressum | Reinkober Holding GmbH"
+  description="Impressum der Reinkober Holding GmbH, Stemmenkamp 83a, 59368 Werne – Kontakt, Handelsregister, USt-IdNr. und Geschäftsführung."
+  path="/impressum"
+>
+  <section class="imp-head">
+    <div class="container imp-head__grid">
+      <h1 class="imp-head__title" data-reveal>Impressum</h1>
+      <div class="imp-head__body" data-reveal style="--reveal-delay:120ms">
+        <hr class="rule rule--accent imp-head__rule" data-draw style="--reveal-delay:250ms" />
+        <address class="imp-head__text">
+          <p><strong>{site.name}</strong><br />{site.address.street}<br />{site.address.zip} {site.address.city}</p>
+          <p>
+            E-Mail: <a href={`mailto:${site.email}`}>{site.email}</a><br />
+            Telefon: <a href={`tel:${site.phone}`}>{site.phoneDisplay}</a>
+          </p>
+          <p>
+            Registergericht: {r.court}<br />
+            Registernummer: {r.number}<br />
+            USt-IdNr.: {r.vatId}<br />
+            Geschäftsführer: {r.managingDirector}
+          </p>
+        </address>
+      </div>
+    </div>
+  </section>
+
+  {
+    s.streitbeilegung && (
+      <section class="imp-sec">
+        <div class="container">
+          <h2 class="legal-h2 imp-sec__h">Alternative Streitbeilegung</h2>
+          <div class="imp-sec__p">
+            <p>
+              Information nach dem Gesetz über die alternative Streitbeilegung in Verbrauchersachen
+              (Verbraucherstreitbeilegungsgesetz – VSBG) vom 19.02.2016, BGBl. I S. 254, 1039
+            </p>
+            <p>
+              Wir informieren hiermit unsere Kunden, dass wir nicht bereit oder verpflichtet sind, an
+              Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.
+            </p>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  {
+    s.haftungInhalte && (
+      <section class="imp-sec">
+        <div class="container">
+          <h2 class="legal-h2 imp-sec__h">Haftung für Inhalte</h2>
+          <div class="imp-sec__p">
+            <p>
+              Als Diensteanbieter sind wir gemäß § 7 Abs. 1 DDG für eigene Inhalte auf diesen Seiten nach den allgemeinen
+              Gesetzen verantwortlich. Nach §§ 8 bis 10 DDG sind wir als Diensteanbieter jedoch nicht verpflichtet,
+              übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf
+              eine rechtswidrige Tätigkeit hinweisen.
+            </p>
+            <p>
+              Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen
+              bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer
+              konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese
+              Inhalte umgehend entfernen.
+            </p>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  {
+    s.haftungLinksUrheberrecht && (
+      <section class="imp-sec imp-sec--last">
+        <div class="container">
+          <h2 class="legal-h2 imp-sec__h imp-sec__h--wide">Haftung für Links</h2>
+          <div class="imp-sec__p">
+            <p>
+              Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben.
+              Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten
+              Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die verlinkten Seiten
+              wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum
+              Zeitpunkt der Verlinkung nicht erkennbar.
+            </p>
+            <p>
+              Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer
+              Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend
+              entfernen.
+            </p>
+          </div>
+          <h2 class="legal-h2 imp-sec__h imp-sec__h--wide imp-sec__h--gap">Urheberrecht</h2>
+          <div class="imp-sec__p">
+            <p>
+              Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen
+              Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der
+              Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers.
+              Downloads und Kopien dieser Seite sind nur für den privaten, nicht kommerziellen Gebrauch gestattet.
+            </p>
+            <p>
+              Soweit die Inhalte auf dieser Seite nicht vom Betreiber erstellt wurden, werden die Urheberrechte Dritter
+              beachtet. Insbesondere werden Inhalte Dritter als solche gekennzeichnet. Sollten Sie trotzdem auf eine
+              Urheberrechtsverletzung aufmerksam werden, bitten wir um einen entsprechenden Hinweis. Bei Bekanntwerden von
+              Rechtsverletzungen werden wir derartige Inhalte umgehend entfernen.
+            </p>
+          </div>
+        </div>
+      </section>
+    )
+  }
+</Legal>
+
+<style>
+  .imp-head { padding: 100px 0 70px; }
+  .imp-head__grid {
+    display: grid;
+    grid-template-columns: 395fr 823fr;
+    column-gap: 32px;
+    row-gap: 24px;
+  }
+  .imp-head__title {
+    font-size: 32px;
+    line-height: 1;
+  }
+  .imp-head__rule { margin: 15px 0 0; }
+  .imp-head__text {
+    margin-top: 19px;
+    font-style: normal;
+    font-size: 18px;
+    line-height: 27px;
+  }
+  .imp-head__text p + p { margin-top: 16px; }
+  .imp-head__text a { text-decoration: none; }
+
+  .imp-sec { padding: 20px 0; }
+  .imp-sec--last { padding-bottom: 100px; }
+  .imp-sec__p {
+    margin-top: 10px;
+    font-size: 16px;
+    line-height: 24px;
+  }
+  .imp-sec__h--wide + .imp-sec__p { margin-top: 20px; }
+  .imp-sec__h--gap { margin-top: 30px; }
+  .imp-sec__p p + p { margin-top: 16px; }
+
+  @media (max-width: 767px) {
+    .imp-head { padding: 50px 0 30px; }
+    .imp-head__grid { grid-template-columns: 1fr; }
+    .imp-sec--last { padding-bottom: 50px; }
+  }
+</style>
